@@ -17,7 +17,7 @@ import MarkerClusterer from "../../../lib/addons/MarkerClusterer";
 const MarkerClustererExampleGoogleMap = withGoogleMap(props => (
   <GoogleMap
     defaultZoom={3}
-    defaultCenter={{ lat: 25.0391667, lng: 121.525 }}
+    defaultCenter={{ lat: 43.0391667, lng: -79.525 }}
   >
     <MarkerClusterer
       averageCenter
@@ -26,8 +26,8 @@ const MarkerClustererExampleGoogleMap = withGoogleMap(props => (
     >
       {props.markers.map(marker => (
         <Marker
-          position={{ lat: marker.latitude, lng: marker.longitude }}
-          key={marker.photo_id}
+          position={{ lat: marker.attributes.LATITUDE, lng: marker.attributes.LONGITUDE }}
+          key={marker.attributes.Index_}
         />
       ))}
     </MarkerClusterer>
@@ -40,10 +40,10 @@ export default class MarkerClustererExample extends Component {
   }
 
   componentDidMount() {
-    fetch(`https://gist.githubusercontent.com/farrrr/dfda7dd7fccfec5474d3/raw/758852bbc1979f6c4522ab4e92d1c92cba8fb0dc/data.json`)
+    fetch('https://services.arcgis.com/S9th0jAJ7bqgIRjw/arcgis/rest/services/KSI/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json')
       .then(res => res.json())
       .then(data => {
-        this.setState({ markers: data.photos });
+        this.setState({ markers: data.features });
       });
   }
 
